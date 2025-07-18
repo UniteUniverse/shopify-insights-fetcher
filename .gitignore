@@ -9,8 +9,8 @@ dist/
 *.egg-info/
 
 # Virtual environments
-venv/
-.env/
+venv
+.env
 
 # Logs and local databases
 *.log
