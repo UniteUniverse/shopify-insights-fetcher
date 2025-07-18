@@ -49,7 +49,7 @@ A comprehensive Flask application for analyzing Shopify stores and extracting de
 
 2. **Create virtual environment**
    ```bash
-   python -m venv venv
+   python3.11 -m venv venv
    source venv/bin/activate  # On Windows: venv\\Scripts\\activate
    ```
 
@@ -264,71 +264,3 @@ This project is licensed under the MIT License.
 ## Support
 
 For issues and questions, please create an issue in the repository.
-''',
-
-    'Dockerfile': '''FROM python:3.9-slim
-
-WORKDIR /app
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \\
-    gcc \\
-    default-libmysqlclient-dev \\
-    pkg-config \\
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements and install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
-COPY . .
-
-# Create logs directory
-RUN mkdir -p logs
-
-# Expose port
-EXPOSE 5000
-
-# Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "app:create_app()"]
-''',
-
-    'docker-compose.yml': '''version: '3.8'
-
-services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-    environment:
-      - FLASK_ENV=production
-      - MYSQL_HOST=db
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=password
-      - MYSQL_DB=shopify_insights
-    depends_on:
-      - db
-    volumes:
-      - ./logs:/app/logs
-
-  db:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=shopify_insights
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
-    ports:
-      - "3306:3306"
-
-volumes:
-  mysql_data:
-''',
-
-    'Procfile': '''web: gunicorn app:create_app()
-''',
-
-    'runtime.txt': '''python-3.9.18
-'''
