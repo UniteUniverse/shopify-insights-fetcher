@@ -76,7 +76,7 @@ A comprehensive Flask application for analyzing Shopify stores and extracting de
 
 7. **Run the application**
    ```bash
-   python app.py
+   python main.py
    ```
 
 The application will be available at `http://localhost:5000`
@@ -196,9 +196,10 @@ shopify-insights-fetcher/
 │   ├── templates/       # HTML templates
 │   └── static/          # CSS, JS, images
 ├── config/              # Configuration files
-├── tests/               # Test files
+├── tests               # Test files
 ├── logs/                # Log files
 └── requirements.txt     # Dependencies
+└── main.py
 ```
 
 ### Key Components
