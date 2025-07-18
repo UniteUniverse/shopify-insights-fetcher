@@ -43,7 +43,7 @@ A comprehensive Flask application for analyzing Shopify stores and extracting de
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/UniteUniverse/shopify-insights-fetcher.git
    cd shopify-insights-fetcher
    ```
 
