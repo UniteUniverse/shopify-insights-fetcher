@@ -196,7 +196,7 @@ shopify-insights-fetcher/
 │   ├── templates/       # HTML templates
 │   └── static/          # CSS, JS, images
 ├── config/              # Configuration files
-├── tests               # Test files
+├── test_api.py          # Test file
 ├── logs/                # Log files
 └── requirements.txt     # Dependencies
 └── main.py
