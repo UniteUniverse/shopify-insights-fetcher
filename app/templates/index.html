@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Shopify Insights Fetcher{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="jumbotron bg-primary text-white p-5 rounded">
+            <h1 class="display-4">Shopify Insights Fetcher</h1>
+            <p class="lead">Analyze Shopify stores and extract comprehensive insights about brands, products, competitors, and more.</p>
+            <hr class="my-4">
+            <p>Get detailed information about any Shopify store including product catalogs, contact information, policies, FAQs, and competitive analysis.</p>
+            <a class="btn btn-light btn-lg" href="{{ url_for('main.analyze') }}" role="button">
+                <i class="fas fa-search"></i> Start Analysis
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-store fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Store Analysis</h5>
+                <p class="card-text">Extract comprehensive information from any Shopify store including brand context, contact details, and policies.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-boxes fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Product Catalog</h5>
+                <p class="card-text">Get complete product catalogs with pricing, descriptions, variants, and availability information.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Competitor Analysis</h5>
+                <p class="card-text">Analyze competitors and get strategic insights powered by advanced LLM technology.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-10 mx-auto">
+        <h2>Features</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Brand Information Extraction</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Product Catalog Analysis</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Hero Products Detection</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Contact Information</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Social Media Handles</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Privacy & Return Policies</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> FAQ Extraction</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Important Links Discovery</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> Competitor Analysis</li>
+                    <li class="list-group-item"><i class="fas fa-check text-success"></i> LLM-powered Insights</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

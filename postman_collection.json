@@ -1,0 +1,83 @@
+{"info": {
+        "name": "Shopify Insights Fetcher API",
+        "description": "API collection for testing Shopify Insights Fetcher endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/health",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "health"]
+                }
+            }
+        },
+        {
+            "name": "Analyze Brand",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\\n    \\"website_url\\": \\"https://gymshark.com\\",\\n    \\"include_competitors\\": true\\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/analyze",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "analyze"]
+                }
+            }
+        },
+        {
+            "name": "Get All Brands",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/brands",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "brands"]
+                }
+            }
+        },
+        {
+            "name": "Get Brand Details",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/brand/1",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "brand", "1"]
+                }
+            }
+        },
+        {
+            "name": "Delete Brand",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/brand/1",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "brand", "1"]
+                }
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:5000",
+            "type": "string"
+        }
+    ]}

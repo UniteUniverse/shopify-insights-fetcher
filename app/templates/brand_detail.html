@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}{{ data.brand.name }} - Brand Details{% endblock %}
+
+{% block content %}
+<div class="brand-header">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>
+                {% if data.brand.is_shopify_store %}
+                    <i class="fas fa-store"></i>
+                {% else %}
+                    <i class="fas fa-globe"></i>
+                {% endif %}
+                {{ data.brand.name or data.brand.domain }}
+            </h1>
+            <p class="lead">{{ data.brand.domain }}</p>
+            {% if data.brand.brand_context %}
+            <p>{{ data.brand.brand_context }}</p>
+            {% endif %}
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ data.brand.website_url }}" target="_blank" class="btn btn-light btn-lg">
+                <i class="fas fa-external-link-alt"></i> Visit Store
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Brand Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <strong>Status:</strong>
+                        <span class="badge bg-{{ 'success' if data.brand.scraping_status == 'completed' else 'warning' if data.brand.scraping_status == 'in_progress' else 'danger' }}">
+                            {{ data.brand.scraping_status|title }}
+                        </span>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong>Store Type:</strong>
+                        {% if data.brand.is_shopify_store %}
+                            <span class="badge bg-success">Shopify Store</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Other</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                {% if data.brand.contact_email %}
+                <p><i class="fas fa-envelope"></i> {{ data.brand.contact_email }}</p>
+                {% endif %}
+                {% if data.brand.contact_phone %}
+                <p><i class="fas fa-phone"></i> {{ data.brand.contact_phone }}</p>
+                {% endif %}
+                {% if data.brand.last_scraped %}
+                <p><i class="fas fa-clock"></i> Last analyzed: {{ data.brand.last_scraped | datetime_format }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        {% if data.brand.social_handles %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-share-alt"></i> Social Media</h5>
+            </div>
+            <div class="card-body">
+                {% for platform, handle in data.brand.social_handles.items() %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>
+                        <i class="fab fa-{{ platform }}"></i> {{ platform|title }}
+                    </span>
+                    <a href="https://{{ platform }}.com/{{ handle }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                        {{ handle }}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if data.brand.hero_products %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="fas fa-star"></i> Hero Products</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% for product in data.brand.hero_products %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" class="card-img-top" alt="{{ product.title }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ product.title }}</h6>
+                        {% if product.price %}
+                        <p class="card-text"><strong>${{ product.price }}</strong></p>
+                        {% endif %}
+                        {% if product.url %}
+                        <a href="{{ product.url }}" target="_blank" class="btn btn-sm btn-primary">View Product</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if data.products %}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="fas fa-boxes"></i> Product Catalog ({{ data.products|length }} products)</h5>
+        <button class="btn btn-sm btn-outline-primary" onclick="toggleProductCatalog()">
+            <i class="fas fa-eye"></i> Toggle View
+        </button>
+    </div>
+    <div class="card-body" id="productCatalog" style="display: none;">
+        <div class="row">
+            {% for product in data.products[:12] %}
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    {% if product.featured_image %}
+                    <img src="{{ product.featured_image }}" class="card-img-top" alt="{{ product.title }}" style="height: 150px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ product.title[:50] }}{% if product.title|length > 50 %}...{% endif %}</h6>
+                        {% if product.price %}
+                        <p class="card-text"><strong>${{ product.price }}</strong></p>
+                        {% endif %}
+                        {% if product.product_url %}
+                        <a href="{{ product.product_url }}" target="_blank" class="btn btn-sm btn-primary">View</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if data.products|length > 12 %}
+        <p class="text-muted">Showing first 12 products out of {{ data.products|length }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% if data.brand.faqs %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="fas fa-question-circle"></i> FAQs</h5>
+    </div>
+    <div class="card-body">
+        {% for faq in data.brand.faqs %}
+        <div class="faq-item">
+            <h6>{{ faq.question }}</h6>
+            <p class="text-muted">{{ faq.answer }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if data.competitors %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="fas fa-chart-line"></i> Competitors</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% for competitor in data.competitors %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ competitor.name }}</h6>
+                        <p class="card-text">{{ competitor.domain }}</p>
+                        {% if competitor.brand_context %}
+                        <p class="card-text"><small class="text-muted">{{ competitor.brand_context[:100] }}...</small></p>
+                        {% endif %}
+                        <a href="{{ competitor.website_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-external-link-alt"></i> Visit
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if data.brand.important_links %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="fas fa-link"></i> Important Links</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% for link_type, url in data.brand.important_links.items() %}
+            <div class="col-md-4 mb-2">
+                <a href="{{ url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-external-link-alt"></i> {{ link_type|title|replace('_', ' ') }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+function toggleProductCatalog() {
+    const catalog = document.getElementById('productCatalog');
+    if (catalog.style.display === 'none') {
+        catalog.style.display = 'block';
+    } else {
+        catalog.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

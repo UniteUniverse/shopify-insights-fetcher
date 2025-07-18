@@ -1,0 +1,13 @@
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+PyMySQL==1.1.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+pydantic<2
+python-dotenv==1.0.0
+gunicorn==21.2.0
+openai==0.28.1
+urllib3==2.0.4
+Werkzeug==2.3.7
+cryptography

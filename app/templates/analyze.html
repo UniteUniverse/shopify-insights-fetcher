@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Store - Shopify Insights Fetcher{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-search"></i> Analyze Shopify Store</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="analyzeForm">
+                    <div class="mb-3">
+                        <label for="website_url" class="form-label">Website URL</label>
+                        <input type="url" class="form-control" id="website_url" name="website_url" 
+                               placeholder="https://example.com" required>
+                        <div class="form-text">Enter the Shopify store URL you want to analyze</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="include_competitors" name="include_competitors">
+                            <label class="form-check-label" for="include_competitors">
+                                Include Competitor Analysis
+                            </label>
+                            <div class="form-text">This will take longer but provides competitive insights</div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg" id="analyzeBtn">
+                            <i class="fas fa-search"></i> Start Analysis
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-10 mx-auto">
+        <h4>What we analyze:</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-store text-primary"></i> Brand Information
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-boxes text-success"></i> Complete Product Catalog
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-star text-warning"></i> Hero Products
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-envelope text-info"></i> Contact Information
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-share-alt text-secondary"></i> Social Media Handles
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-shield-alt text-primary"></i> Privacy & Return Policies
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-question-circle text-success"></i> FAQ Section
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-link text-warning"></i> Important Links
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-chart-line text-info"></i> Competitor Analysis
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-brain text-secondary"></i> LLM-powered Insights
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('analyzeForm').addEventListener('submit', function(e) {
+    const button = document.getElementById('analyzeBtn');
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+    button.disabled = true;
+});
+</script>
+{% endblock %}
